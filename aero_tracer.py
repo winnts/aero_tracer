@@ -61,6 +61,6 @@ while True:
     # config = aero_tracer.get_config()
     nearest = aero_tracer.get_nearest_flight("ODS", aero_tracer.config['initial_vector']['start'])
     if len(nearest) > 0:
-        plane_point = {"x": float(nearest['geography']['latitude']), "y": float(nearest['geography']['longitude'])}
+        plane_point = {"x": float(nearest[0]['geography']['latitude']), "y": float(nearest[0]['geography']['longitude'])}
         aero_tracer.move_servo(aero_tracer.config['initial_vector']['start'], aero_tracer.config['initial_vector']['end'], plane_point)
     time.sleep(300)
