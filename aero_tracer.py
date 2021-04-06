@@ -1,4 +1,4 @@
-# import servo
+import servo
 from angle import Angle
 from aviation_edge_api import AviationEdgeApi
 from collections import OrderedDict
@@ -20,7 +20,7 @@ class AeroTracer:
 
     def get_nearest_flight(self, airport, home):
         # flight_list = {}
-        # nearest_flight = {}
+        nearest_flight = {}
         all_flights = self.get_flights(airport)
         print(all_flights)
         try:
@@ -40,7 +40,7 @@ class AeroTracer:
             print("No Flights")
         # nearest_flight = sorted(all_flights, key=lambda i: i['distance'])
         # print("Nearest flights: ", nearest_flight[0])
-        return nearest_flight[0]
+        return nearest_flight
 
     def move_servo(self, start, end, plane):
         # while True:
@@ -53,7 +53,7 @@ class AeroTracer:
         # angle.calculate_distance(start, end)
         # angle.calculate_distance(start, plane)
         print("Rotating to: ", str(angle_to_move+90))
-        # servo.move_to_angle(angle_to_move+90)
+        servo.move_to_angle(angle_to_move+90)
 
 
 while True:
