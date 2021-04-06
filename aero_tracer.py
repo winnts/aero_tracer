@@ -34,10 +34,12 @@ class AeroTracer:
             # nearest_flight = OrderedDict(sorted(flight_list.items(), key=itemgetter(1)))
             # nearest_flight = OrderedDict(sorted(all_flights, key=lambda i: i['distance']))
             # print("Nearest flights: ", nearest_flight)
+            nearest_flight = sorted(all_flights, key=lambda i: i['distance'])
+            print("Nearest flights: ", nearest_flight[0])
         except:
             print("No Flights")
-        nearest_flight = sorted(all_flights, key=lambda i: i['distance'])
-        print("Nearest flights: ", nearest_flight[0])
+        # nearest_flight = sorted(all_flights, key=lambda i: i['distance'])
+        # print("Nearest flights: ", nearest_flight[0])
         return nearest_flight[0]
 
     def move_servo(self, start, end, plane):
