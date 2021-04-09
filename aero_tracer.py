@@ -5,6 +5,7 @@ from collections import OrderedDict
 from operator import itemgetter
 import json
 import time
+from photo_maker import Camera
 
 
 class AeroTracer:
@@ -66,16 +67,21 @@ class AeroTracer:
             time.sleep(300)
 
     def camera_rotating_start(self):
+        photo = Camera()
         while True:
-            init = 20
+            init = 60
             last = 120
             step = 10
             for x in range(init, last, step):
                 servo.move_to_angle(x)
-                time.sleep(10)
+                time.sleep(2)
+                photo.take_picture()
+                time.sleep(30)
             for y in range(last, init, step*(-1)):
                 servo.move_to_angle(y)
-                time.sleep(10)
+                time.sleep(2)
+                photo.take_picture()
+                time.sleep(30)
 
 
 start = AeroTracer()
