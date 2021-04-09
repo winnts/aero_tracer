@@ -55,12 +55,28 @@ class AeroTracer:
         print("Rotating to: ", str(angle_to_move+90))
         servo.move_to_angle(angle_to_move+90)
 
+    def aeroTracer_start(self):
+        while True:
+            aero_tracer = AeroTracer()
+            # config = aero_tracer.get_config()
+            nearest = aero_tracer.get_nearest_flight("ODS", aero_tracer.config['initial_vector']['start'])
+            if len(nearest) > 0:
+                plane_point = {"x": float(nearest[0]['geography']['latitude']), "y": float(nearest[0]['geography']['longitude'])}
+                aero_tracer.move_servo(aero_tracer.config['initial_vector']['start'], aero_tracer.config['initial_vector']['end'], plane_point)
+            time.sleep(300)
 
-while True:
-    aero_tracer = AeroTracer()
-    # config = aero_tracer.get_config()
-    nearest = aero_tracer.get_nearest_flight("ODS", aero_tracer.config['initial_vector']['start'])
-    if len(nearest) > 0:
-        plane_point = {"x": float(nearest[0]['geography']['latitude']), "y": float(nearest[0]['geography']['longitude'])}
-        aero_tracer.move_servo(aero_tracer.config['initial_vector']['start'], aero_tracer.config['initial_vector']['end'], plane_point)
-    time.sleep(300)
+    def camera_rotating_start(self):
+        while True:
+            init = 20
+            last = 120
+            step = 10
+            for x in range(init, last, step):
+                servo.move_to_angle(x)
+                time.sleep(10)
+            for y in range(last, init, step*(-1)):
+                servo.move_to_angle(y)
+                time.sleep(10)
+
+
+start = AeroTracer()
+start.camera_rotating_start()

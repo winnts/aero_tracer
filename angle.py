@@ -41,5 +41,5 @@ class Angle:
         c = 2 * atan2(sqrt(a), sqrt(1-a))
 
         d = 6371e3 * c
-        print("Distance: ", d)
+        print("Distance in km: ", str(round(d/1000, 2)))
         return d
