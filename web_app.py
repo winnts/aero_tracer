@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import send_file
+from flask import render_template
 from aero_tracer import AeroTracer
 import threading
 
@@ -7,9 +8,9 @@ import threading
 app = Flask(__name__)
 
 
-@app.route('/picture/image.jpg')
+@app.route('/picture')
 def send_picture():
-    return send_file("image.jpg", mimetype='image/jpg', as_attachment=True)
+    return render_template("photo.html")
 
 
 @app.route('/start')
