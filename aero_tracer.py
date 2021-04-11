@@ -1,8 +1,6 @@
 import servo
 from angle import Angle
 from aviation_edge_api import AviationEdgeApi
-from collections import OrderedDict
-from operator import itemgetter
 import json
 import time
 from photo_maker import Camera
