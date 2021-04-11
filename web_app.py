@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/picture')
 def send_picture():
-    return send_file("image.jpg", mimetype='image/jpg')
+    return send_file("image.jpg", mimetype='image/jpg', as_attachment=True)
 
 
 @app.route('/start')
