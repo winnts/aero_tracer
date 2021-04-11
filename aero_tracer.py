@@ -84,5 +84,5 @@ class AeroTracer:
                 time.sleep(30)
 
 
-start = AeroTracer()
-start.camera_rotating_start()
+# start = AeroTracer()
+# start.camera_rotating_start()
