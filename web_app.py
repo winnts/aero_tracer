@@ -7,7 +7,7 @@ import threading
 app = Flask(__name__)
 
 
-@app.route('/picture')
+@app.route('/picture/image.jpg')
 def send_picture():
     return send_file("image.jpg", mimetype='image/jpg', as_attachment=True)
 
