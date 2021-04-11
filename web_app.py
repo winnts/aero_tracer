@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/picture')
 def send_picture():
-    return render_template("/opt/aero_tracer/templates/photo.html")
+    return render_template("picture.html")
 
 
 @app.route('/start')
