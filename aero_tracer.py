@@ -67,9 +67,9 @@ class AeroTracer:
                                        aero_tracer.config['initial_vector']['end'], plane_point)
             time.sleep(300)
 
-    def move_servo_and_take_photo(self, move_angle, full_filename, small_filename):
-        photo = Camera()
-        aws = AWSS3Controller(self.config['aws'])
+    def move_servo_and_take_photo(self, photo, aws, move_angle, full_filename, small_filename):
+        # photo = Camera()
+        # aws = AWSS3Controller(self.config['aws'])
         servo.move_to_angle(move_angle)
         time.sleep(2)
         photo.take_full_picture(full_filename)
@@ -79,6 +79,8 @@ class AeroTracer:
         time.sleep(self.config['servo']['moving_pause'])
 
     def camera_rotating_start(self):
+        photo = Camera()
+        aws = AWSS3Controller(self.config['aws'])
         full_filename = "image.jpg"
         small_filename = "image_small.jpg"
         while True:
@@ -86,10 +88,10 @@ class AeroTracer:
             last = self.config['servo']['final_angle']
             step = self.config['servo']['moving_step']
             for x in range(init, last, step):
-                self.move_servo_and_take_photo(x, full_filename, small_filename)
+                self.move_servo_and_take_photo(photo, aws, x, full_filename, small_filename)
 
             for y in range(last, init, step*(-1)):
-                self.move_servo_and_take_photo(y, full_filename, small_filename)
+                self.move_servo_and_take_photo(photo, aws, y, full_filename, small_filename)
 
 
 start = AeroTracer()
