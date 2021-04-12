@@ -4,6 +4,7 @@ from aviation_edge_api import AviationEdgeApi
 import json
 import time
 from photo_maker import Camera
+from aws_s3_controller import AWSS3Controller
 
 
 class AeroTracer:
@@ -60,27 +61,36 @@ class AeroTracer:
             # config = aero_tracer.get_config()
             nearest = aero_tracer.get_nearest_flight("ODS", aero_tracer.config['initial_vector']['start'])
             if len(nearest) > 0:
-                plane_point = {"x": float(nearest[0]['geography']['latitude']), "y": float(nearest[0]['geography']['longitude'])}
-                aero_tracer.move_servo(aero_tracer.config['initial_vector']['start'], aero_tracer.config['initial_vector']['end'], plane_point)
+                plane_point = {"x": float(nearest[0]['geography']['latitude']),
+                               "y": float(nearest[0]['geography']['longitude'])}
+                aero_tracer.move_servo(aero_tracer.config['initial_vector']['start'],
+                                       aero_tracer.config['initial_vector']['end'], plane_point)
             time.sleep(300)
 
-    def camera_rotating_start(self):
+    def move_servo_and_take_photo(self, move_angle, full_filename, small_filename):
         photo = Camera()
+        aws = AWSS3Controller(self.config['aws'])
+        servo.move_to_angle(move_angle)
+        time.sleep(2)
+        photo.take_full_picture(full_filename)
+        photo.take_small_picture(small_filename)
+        aws.upload_to_s3(small_filename, self.config['aws']['bucket'],
+                         self.config['aws']['prefix'] + small_filename, {'ACL': 'public-read'})
+        time.sleep(self.config['servo']['moving_pause'])
+
+    def camera_rotating_start(self):
+        full_filename = "image.jpg"
+        small_filename = "image_small.jpg"
         while True:
-            init = 60
-            last = 120
-            step = 10
+            init = self.config['servo']['init_angle']
+            last = self.config['servo']['final_angle']
+            step = self.config['servo']['moving_step']
             for x in range(init, last, step):
-                servo.move_to_angle(x)
-                time.sleep(2)
-                photo.take_picture()
-                time.sleep(30)
+                self.move_servo_and_take_photo(x, full_filename, small_filename)
+
             for y in range(last, init, step*(-1)):
-                servo.move_to_angle(y)
-                time.sleep(2)
-                photo.take_picture()
-                time.sleep(30)
+                self.move_servo_and_take_photo(y, full_filename, small_filename)
 
 
-# start = AeroTracer()
-# start.camera_rotating_start()
+start = AeroTracer()
+start.camera_rotating_start()

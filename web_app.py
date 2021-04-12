@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/picture')
 def send_picture():
-    response = make_response(render_template('picture.html'))
+    response = make_response(send_file('image.jpg'))
     response.headers['Content-type'] = 'image/jpg'
     return response
 
