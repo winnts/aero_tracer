@@ -1,4 +1,5 @@
-import servo
+# import servo
+import servo_hat
 from angle import Angle
 from aviation_edge_api import AviationEdgeApi
 import json
@@ -53,7 +54,7 @@ class AeroTracer:
         # angle.calculate_distance(start, end)
         # angle.calculate_distance(start, plane)
         print("Rotating to: ", str(angle_to_move+90))
-        servo.move_to_angle(angle_to_move+90)
+        servo_hat.move_to_angle(angle_to_move+90)
 
     def aeroTracer_start(self):
         while True:
@@ -70,7 +71,7 @@ class AeroTracer:
     def move_servo_and_take_photo(self, photo, aws, move_angle, full_filename, small_filename):
         # photo = Camera()
         # aws = AWSS3Controller(self.config['aws'])
-        servo.move_to_angle(move_angle)
+        servo_hat.move_to_angle(move_angle)
         time.sleep(2)
         photo.take_full_picture(full_filename)
         photo.take_small_picture(small_filename)
@@ -94,5 +95,6 @@ class AeroTracer:
                 self.move_servo_and_take_photo(photo, aws, y, full_filename, small_filename)
 
 
-start = AeroTracer()
-start.camera_rotating_start()
+if __name__ == "__main__":
+    start = AeroTracer()
+    start.camera_rotating_start()
