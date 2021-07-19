@@ -7,7 +7,7 @@ class Camera:
         self.camera.rotation = 180
 
     def take_full_picture(self, picture_name):
-        self.camera.resolution = (3280, 2464)
+        self.camera.resolution = (3280, 1930)
         self.camera.capture(picture_name)
 
     def take_small_picture(self, picture_name):
