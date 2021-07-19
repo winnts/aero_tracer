@@ -77,6 +77,8 @@ class AeroTracer:
         photo.take_small_picture(small_filename)
         aws.upload_to_s3(small_filename, self.config['aws']['bucket'],
                          self.config['aws']['prefix'] + small_filename, {'ACL': 'public-read'})
+        aws.upload_to_s3(full_filename, self.config['aws']['bucket'],
+                         self.config['aws']['prefix'] + full_filename, {'ACL': 'public-read'})
         time.sleep(self.config['servo']['moving_pause'])
 
     def camera_rotating_start(self):
